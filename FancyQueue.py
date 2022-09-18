@@ -15,7 +15,7 @@ class FancyQueue:
         return self.size()
 
     def __add__(self, other):
-        if isinstance(other, ErenQueue):
+        if isinstance(other, FancyQueue):
             return ErenQueue(max_size=self.max_size+other.max_size, initial_set=self.getAll()+other.getAll())
 
         return self
