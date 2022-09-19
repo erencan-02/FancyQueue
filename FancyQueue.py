@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 
 class FancyQueue:
 
@@ -8,20 +11,24 @@ class FancyQueue:
         if initial_set is not None:
             self.addAll(initial_set)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str([str(i) for i in self.container])
 
-    def __sizeof__(self):
+    def __sizeof__(self) -> int:
         return self.size()
 
-    def __add__(self, other):
+    def __add__(self, other) -> FancyQueue:
         if isinstance(other, FancyQueue):
             return FancyQueue(max_size=self.max_size+other.max_size, initial_set=self.getAll()+other.getAll())
 
         return self
 
-    def __mul__(self, k):
-        return list(map(lambda x: k*x, self.container))
+    def __mul__(self, k) -> FancyQueue:
+        if isinstance(k, int):
+            self.container = list(map(lambda x: k*x, self.container))
+            return self
+
+        return self
 
     def enqueue(self, element):
         self.container.append(element)
@@ -51,16 +58,17 @@ class FancyQueue:
         for i in collection:
             self.enqueue(i)
 
-    def rotate(self, k):
+    def rotate(self, k) -> FancyQueue:
         if len(self.container) <= 1:
             return
 
         k = k % len(self.container)
         self.container = self.container[k:] + self.container[:k]
+        return self
 
-    def reverse(self):
+    def reverse(self) -> FancyQueue:
         self.container = self.container[::-1]
-        return self.container
+        return self
 
     def size(self):
         return len(self.container)
@@ -74,5 +82,5 @@ class FancyQueue:
     def getAll(self):
         return self.container
 
-
-
+    def getOrderedPairs(self):
+        return list(zip(list(range(self.size())), self.container))
