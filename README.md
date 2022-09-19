@@ -8,5 +8,5 @@ Queue with following methods (names are self explaining): enqueue, dequeue, peek
 
 
 
-![Alt Text](https://giphy.com/gifs/season-9-the-simpsons-9x20-xT5LMuVtaVYI03uXsc)
+![Alt Text](https://media4.giphy.com/media/xT5LMuVtaVYI03uXsc/giphy.gif)
 
