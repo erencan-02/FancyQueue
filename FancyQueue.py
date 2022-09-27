@@ -4,7 +4,7 @@ from __future__ import annotations
 
 class FancyQueue:
 
-    def __init__(self, max_size=10, initial_set=None):
+    def __init__(self, max_size=10, initial_set=None, is_blocking=False):
         self.max_size = max_size
         self.container = []
 
@@ -30,11 +30,19 @@ class FancyQueue:
 
         return self
 
-    def enqueue(self, element):
-        self.container.append(element)
+    def __iter__(self):
+        return self
 
-        if(len(self.container) > self.max_size):
+    def __next__(self):
+        return self.dequeue()
+
+    def enqueue(self, element):
+        if len(self.container) == self.max_size:
+            if self.is_blocking:
+                return
             self.container = self.container[1:]
+
+        self.container.append(element)
 
     def dequeue(self):
         if len(self.container) == 0:
@@ -57,6 +65,8 @@ class FancyQueue:
     def addAll(self, collection):
         for i in collection:
             self.enqueue(i)
+
+        return self
 
     def rotate(self, k) -> FancyQueue:
         if len(self.container) <= 1:
